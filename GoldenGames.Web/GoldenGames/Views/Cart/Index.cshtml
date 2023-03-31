@@ -1,0 +1,37 @@
+﻿@model IEnumerable<GoldenGames.Models.JogosCompra>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Jogo</th>
+            <th>Preço</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(i => item.IdJogoNavigation.Nome)</td>
+                <td>@Html.DisplayFor(i => item.IdJogoNavigation.Preco) €</td>
+                <td>
+                    <form asp-controller="Cart" asp-action="Remove">
+                        <input type="hidden" name="gameid" value="@item.IdJogoNavigation.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">Remover</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="1"></td>
+            <td>Total: @Model.Sum(i => i.IdJogoNavigation.Preco) €</td>
+            <td>
+                <form asp-controller="Cart" asp-action="Checkout">
+                    <button type="submit" class="btn btn-success btn-sm">Checkout</button>
+                </form>
+            </td>
+        </tr>
+    </tfoot>
+</table>

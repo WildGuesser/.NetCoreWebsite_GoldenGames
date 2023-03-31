@@ -1,0 +1,66 @@
+﻿@model IEnumerable<GoldenGames.Models.Consola>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<style>
+    /* Add some custom CSS to style the table and links */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+        a:hover {
+            color: #0056b3;
+        }
+</style>
+<body >
+    <section>
+        <h1 class="text-center">Adicione uma nova consola</h1>
+
+        <div class="text-center my-4">
+            <a class="btn btn-primary" href="@Url.Action("Create", "Consolas")">Create New</a>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-sm btn-secondary" href="@Url.Action("Edit", "Consolas", new { id = item.Id })">Edit</a>
+                            <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "Consolas", new { id = item.Id })">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</body>

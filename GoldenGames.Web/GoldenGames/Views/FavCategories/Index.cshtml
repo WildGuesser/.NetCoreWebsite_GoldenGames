@@ -1,0 +1,69 @@
+﻿@model List<FavCategories>
+
+<body class="All">
+    <section>
+        <div class="All2">
+            @if (ViewData.ModelState.ErrorCount > 0)
+            {
+                <div class="alert alert-danger">
+                    @foreach (var item in ViewData.ModelState.Values)
+                    {
+                        @foreach (var error in item.Errors)
+                        {
+                            <p>@error.ErrorMessage</p>
+                        }
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="bordernisto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Favourite Categories</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="2">Não possui categorias favoritas, por favor adicione uma.</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var category in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @category.IdCategoriaNavigation.Nome
+                                        </td>
+                                        <td>
+                                            <a asp-action="Delete" asp-route-id="@category.IdCategoria">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="try">
+                    <form asp-controller="FavCategories" asp-action="AddCategory" method="post">
+                        <div class="form-group">
+                            <label>Selecione uma categoria:</label>
+                            <select name="SelectedCategory" class="form-control">
+                                @foreach (var role in ViewData["categories"] as List<Categorium>)
+                                {
+                                    <option value="@role.Nome">@role.Nome</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Category</button>
+                    </form>
+                </div>
+            }
+        </div>
+    </section>
+</body>

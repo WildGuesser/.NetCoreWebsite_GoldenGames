@@ -1,0 +1,137 @@
+﻿@using GoldenGames.Areas.Admin.ViewModels
+@using GoldenGames.Models
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    //Casting
+    var categorias = (List<Categorium>)ViewData["Categorias"];
+    var jogos = (List<Jogo>)ViewData["Jogos"];
+    var consolas = (List<Consola>)ViewData["Consolas"];
+
+}
+
+<html lang="en">
+
+<head>
+    <link href="https://cdn.syncfusion.com/ej2/20.4.38/ej2-base/styles/material.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.syncfusion.com/ej2/20.4.38/ej2-lists/styles/material.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.syncfusion.com/ej2/20.4.38/ej2-buttons/styles/material.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.syncfusion.com/ej2/20.4.38/ej2-navigations/styles/material.css" rel="stylesheet">
+
+    <!-- Essential JS 2 List's global script -->
+    <script src="/js/ej2/ej2_V2.min.js" type="text/javascript"></script>
+    <script src="~/lib/jquery-ajax/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+
+
+<body class="page">
+@if (TempData["Success"] != null)
+{
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <span style="font-weight:bold">@TempData["Success"]</span>
+    </div>
+}
+@if (TempData["NoSuccess"] != null)
+{
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <span class="warningLabel" style="font-weight:bold">@TempData["NoSuccess"]</span>
+    </div>
+}
+    <!--Div que engloba toda a nossa página-->
+    <!--Secção lateral com as categorias e plataformas-->
+    <section class="threegames">
+        <div class="wrapper-category-carousel">
+            <div class="category-platform-div">
+                <div id='_element' class="category-div" >
+                    <h2 class="category-div-name" style="color:yellow">Categories</h2>
+                        <div class="category-div-name2">
+
+                            @foreach(var categoria in @categorias)
+                            {
+                                <div>
+                                    <a asp-controller="Home" asp-action="FilterGames" asp-route-IdCategoria="@categoria.Id"
+                                        data-ajax="true" data-ajax-method="get" data-ajax-mode="replace" data-ajax-update="#jogos">
+                                        
+                                        <input type="checkbox" id="@categoria.Id">
+                                        <label style="color:white; font-size:22px" for="coding">@categoria.Nome</label>
+
+                                    </a>
+                                </div>
+                            }
+
+                            <h2 class="category-div-name" style="color:yellow">Platforms</h2>
+
+                            @foreach(var consola in @consolas)
+                            {
+                                <div>
+                                    <a asp-controller="Home" asp-action="FilterConsola" asp-route-IdConsola="@consola.Id"
+                                        data-ajax="true" data-ajax-method="get" data-ajax-mode="replace" data-ajax-update="#jogos">
+                                        
+                                        <input type="checkbox" id="@consola.Id">
+                                        <label style="color:white; font-size:22px" for="coding">@consola.Nome</label>
+
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!--Carousel dos nossos jogos de destaque-->
+                <div id="carouselExampleCaptions" class="carousel slide" >
+                    <div class="carousel-indicators" >
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+
+                    <div class="carousel-inner" style="background-color:white" >
+                        <div class="carousel-item active" style="left:65px;">
+                            <img src="~/Images/consola-paystation-5---jogo-god-of-war-ragnarok--formato-digital--ps5.jpg" class="align-middle w-25 h-100 p-3"  alt="...">
+                            <div class="carousel-caption d-none d-md-block" style="top:100px">
+                            <h5 style="color:black; font-size:30px" >Playstation5+God of War Ragnarok</h5>
+                            <p style="color:black; font-size:30px">500€</p>
+                            <p style="color:black; font-size:20px">ÚLTIMOS DIAS!</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item"  style="left:75px;">
+                            <img src="~/Images/Pack-Nintendo-Switch-32GB-Azul-Vermelho-Neon-Mario-Rabbids-Kingdom-Battle.jpg" class="align-middle w-25 h-100 p-3" alt="...">
+                            <div class="carousel-caption d-none d-md-block" style="top:100px; right:50px">
+                                <h5 style="color:black; font-size:30px">Nintendo Switch 32GB+Mario Rabbids Kingdom</h5>
+                                <p style="color:black; font-size:30px">500€</p>
+                                <p style="color:black; font-size:20px">ÚLTIMOS DIAS!</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item "  style="left:75px;">
+                            <img src="~/Images/993-1450x1450.jpg" class="align-middle w-25 h-100 p-3" alt="...">
+                            <div class="carousel-caption d-none d-md-block"> 
+                                <h5 style="color:black; font-size:30px">Xbox One + Minecraft</h5>
+                                    <p style="color:black; font-size:30px">500€</p>
+                                    <p style="color:black; font-size:20px">ÚLTIMOS DIAS!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="jogos" class="meteremcoluna" >
+                <partial name="_PartialJogos" model="@jogos" />
+            </div>
+   
+            <script>
+                var ele = document.getElementById('element');
+                var carousel_ele = document.getElementById('container');
+                var p_ele = document.getElementById('platform-element');
+            </script>
+            <script src="/js/HomePage.js" type="text/javascript"></script>
+    </section>
+</body>
+</html>

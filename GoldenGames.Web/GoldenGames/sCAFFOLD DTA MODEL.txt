@@ -1,0 +1,1 @@
+Scaffold-DbContext -Connection name="GGContext" Microsoft.EntityFrameworkCore.SqlServer –Context GGContext -ContextDir Data -OutputDir Models -DataAnnotations

@@ -1,0 +1,84 @@
+﻿@model GoldenGames.Areas.Admin.ViewModels.UserRolesViewModel
+@using Microsoft.AspNetCore.Identity
+
+
+@{
+    ViewData["Title"] = "ChangeRole";
+}
+
+<style>
+    body {
+    background-color:rgb(22,26,30, 0.9);
+    color:white;
+    }
+</style>
+
+<body class="Roles">
+    <section>
+        <div class="RolesDiv">
+          
+                 <h1>Mudar o Role</h1>
+         
+            <hr />
+<div class="search-container">
+    <form asp-controller="Roles" asp-action="GetUser">
+        <input type="text" placeholder="Inserir Utilizador" name="findUser">
+        <button type="submit"> Search<i class="fa fa-search"></i></button>
+    </form>
+</div>
+
+@if (ViewData.ModelState.ErrorCount > 0)
+{
+    <div class="alert alert-danger">
+        @foreach (var item in ViewData.ModelState.Values)
+        {
+            @foreach (var error in item.Errors)
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        }
+    </div>
+}
+else
+{
+    <div class="UserRole">
+        <div id="User">
+            User: @Model.User
+       
+        </div>
+         <div id="Role">
+            Role: @Model.UserRole
+        </div>
+    </div>
+
+            <div class="changeroleSelectRole">
+                <form asp-controller="Roles" asp-action="ChangeRole" method="post">
+
+                    <div class="form-group">
+                        <label>Selecione um Role:</label>
+                        <select name="selectedRole" class="form-control">
+                            @foreach (var role in ViewData["roles"] as List<IdentityRole>)
+                            {
+                                <option value="@role.Name">@role.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <input type="hidden" name="findUser" value="@Model.User" />
+                    <input type="hidden" asp-for="User" />
+                    <input type="hidden" asp-for="UserRole" />
+                    <button type="submit" class="btn btn-primary">Mudar Role</button>
+                </form>
+            </div>
+        
+}
+
+
+         </div>
+    </section>
+</body>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,230 @@
+/*CSS para a estrutura global da página web*/
+.page {
+    background-color: rgb(22,26,30, 0.9);
+}
+
+.category-div-name {
+    color: #fffee7;
+    margin: 0px;
+    margin-top: 20px;
+    position: relative;
+    left: 1.3rem;
+    background-color: rgba(154, 154, 154, 0.00);
+}
+
+.category-div-name2 {
+    position: relative;
+    left: 1.1rem;
+}
+
+.price-search h2 {
+    position: relative;
+    left: 4rem;
+}
+
+.price-search input {
+    position: relative;
+    left: .4rem;
+}
+
+.btnindex button {
+    position: relative;
+    left: 4rem;
+}
+
+.wrapper-category-carousel {
+    display: grid;
+    grid-template-columns: repeat(5, 335px);
+    row-gap: 20px;
+    column-gap: 20px;
+    grid-auto-rows: minmax(100px,auto);
+    margin-left: 50px;
+}
+
+.category-platform-div {
+    grid-column: 1;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    background-color: rgba(154, 154, 154, 0.09);
+    width: 200px;
+    height: 800px;
+    border-radius: 10px;
+}
+
+/*A estrutura que engloba toda a lista de categorias*/
+#element {
+    display: block;
+    max-width: 200px;
+    margin-left: 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+#platform-element {
+    display: block;
+    max-width: 200px;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+/*Isto modifica a cor de fundo de cada item da lista de categorias*/
+.e-listview .e-list-item {
+    background-color: rgba(154, 154, 154, 0.00);
+}
+
+/*Codifica a cor do texto dentro da lista de categorias*/
+.e-list-text {
+    color: #fffee7;
+}
+
+/*Modifica o corner-radius dos nossas checkboxes da lista de categorias*/
+.e-checkbox-wrapper .e-frame, .e-css.e-checkbox-wrapper .e-frame {
+    border-radius: 5px;
+}
+
+.e-listview .e-list-item.e-hover {
+    background-color: rgba(229, 142, 39, 0.8);
+}
+
+.e-listview .e-list-item.e-checklist.e-focused.e-active {
+    background-color: rgba(229, 142, 39, 0.8);
+}
+
+/*Define a cor do item pela qual o rato passa por cima, sem o selecionar*/
+.e-listview .e-list-item.e-focused {
+    color: #fffee7;
+    background-color: rgba(229, 142, 39, 0.8);
+}
+
+/*Define a cor do nosso item seleciona quando voltas a passar por cima com o rato*/
+.e-listview .e-list-item.e-hover.e-active.e-checklist {
+    background-color: rgba(229, 142, 39, 0.8);
+}
+
+/*Modifica a cor do nosso item selecionado após clicares fora da lista de categorias*/
+.e-listview .e-list-item.e-active.e-checklist {
+    background-color: rgba(229, 142, 39, 0);
+}
+
+/*Modificador da cor do botão de check*/
+.e-checkbox-wrapper .e-frame.e-check, .e-css.e-checkbox-wrapper .e-frame.e-check {
+    background-color: rgb(229, 142, 39);
+}
+
+
+/*CSS REFERENTE AO CAROUSEL*/
+
+
+/*.carousel-div {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row: 1;
+
+    position: relative;
+    height: 540px;
+    width: 1040px;
+}
+
+.carousel slide {
+    width: 1200px;
+    height: 70px
+}
+
+.control-container {
+    display: block;
+}*/
+
+/*Referente as images do container do carousel*/
+/*.img-container {
+    height: 100%;
+    margin: 0;
+}
+
+.img-caption {
+    color: #fff;
+    font-size: 1rem;
+    position: absolute;
+    bottom: 3rem;
+    width: 100%;
+    text-align: center;
+}*/
+
+
+/*Codigo Referente ao nosso Stand Alone Games*/
+/*.stand-alone-games {
+    
+    background-color: rgba(154, 154, 154, 0.1);
+    height: 350px;
+    width: 330px;
+    display: block;
+    position: relative;
+    border-radius: 10px;
+}
+
+#wrap-images {
+    grid-column: 2;
+    grid-row: 2;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 20px;
+    column-gap: 25px;
+    grid-auto-rows: minmax(100px,auto);
+}
+
+
+
+.wrap-labels-button {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2px;
+    column-gap: 25px;
+    grid-auto-rows: minmax(15px, 18px);
+}
+
+.game-images {
+    margin-left: 40px;
+    margin-top: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.game-label {
+    color: #fffee7;
+    font-weight: 200;
+    font-size: medium;
+    display: block;
+    margin-left: 40px;
+    margin-bottom: 8px;
+    margin-right: 20px;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.category-label {
+    color: #fffee7;
+    margin-left: 40px;
+    font-weight: 100;
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.purchase-button {
+    grid-column: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    background-color: rgb(229, 142, 39);
+    color: #fffee7;
+    border-radius: 10px;
+    margin-left: 15px;
+    height: 40px;
+    width: 100px;
+}
+
+.preice-search-name {
+    color: #fffee7;
+    margin: 0px;
+    margin-top: 20px;
+    margin-left: 20px;
+}*/

@@ -1,0 +1,183 @@
+﻿@using GoldenGames.Areas.Admin.ViewModels
+@using GoldenGames.Models
+@using Microsoft.AspNetCore.Identity
+@model GoldenGames.Models.Jogo
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Detalhes do Jogo";
+
+    List<Jogo> game = (List<Jogo>)ViewData["Jogo"];
+}
+
+<body class="bodydetails">
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-success">@TempData["message"]</div>
+    }
+    <div class="card" style="max-width:5000px; background-color:rgb(22,26,30, 0.9); color:white;">
+        <div class="row">
+            <div class="col-md-6" >
+                <img class="rounded mx-auto d-block" src="data:image/*;base64,@(Convert.ToBase64String(ViewBag.Imagem))"/>
+      
+            </div>
+            @foreach(var jogo in @game)
+            {
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-size:large"></h5>
+                        <p style="align-content:center; color:yellow; font-size:large" class="card-text-center">Preço: @jogo.Preco</p>
+                        <p style="align-content:center;" class="card-text-center">Produtora: @jogo.Produtora</p>
+                        <p style="align-content:center;" class="card-text-center">Categoria: @ViewBag.NomeCategoria</p>
+                        <p style="align-content:center;" class="card-text-center">Consola: @ViewBag.NomeConsola</p>
+
+                        <div class="maisbut">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <a asp-controller="Cart" asp-action="AddToCart" asp-route-gameid="@jogo.Id" class="btn btn-sm btn-outline-Second">
+                                    ADD TO CART
+                                </a>
+                            }
+                        </div>
+
+                        <div class="maisbut">
+                            @if (User.IsInRole("Funcionario") || User.IsInRole("Admin"))
+                            {
+                                <a asp-controller="InfoProduct" asp-action="Edit" asp-route-id="@jogo.Id" class="btn btn-sm btn-outline-Second">
+                                    EDIT PRODUCT
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <br />
+                    <h1> Informação</h1>
+                    <p>@jogo.Descricao</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal" style="width:fit-content">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="row">         
+                <p>Produto adicionado com sucesso ao seu carrinho de compras</p>
+
+                <div class="col-md-6">
+                    <img src="~/Images/1540-1.jpg" class="rounded mx-auto d-block" alt="...">
+                </div>
+
+                <div class="col-md-6">
+                    <span class="close">&times;</span>
+                    <button type="button" style="position: relative; top:300px;" class="btn btn-outline-primary">CONTINUE SHOPPING</button>
+                    <button type="button" style="position: relative; top:300px; left: 15px;" class="btn btn-outline-warning">FINISH PURCHASE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*---------------------------------Review Section-------------------------------------------*@
+
+    <div >
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div id="create-review-form">
+                <form>
+                    <div class="form-group">
+                        <label for="rating">Rating</label>
+                        <input type="number" min="0" max="10" class="form-control" id="rating" name="rating" style="width:200px; height:50px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Review</label>
+                        <textarea class="form-control" id="content" name="content" style="width:400px; height:200px;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Review</button>
+                </form>
+            </div>
+
+            @if (ViewData["Reviews"] != null)
+            {
+                foreach (var review in (IEnumerable<Review>)ViewData["Reviews"])
+                {
+                    <div class="review">
+                        <p>Avaliação: @review.Rating</p>
+                        <p>@review.Content</p>
+                        <p>By: @review.UserName | Data: @review.CreatedAt</p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form asp-action="DeleteReview" asp-route-reviewId="@review.Id">
+                                <input type="submit" value="Delete Review" class="btn btn-danger" onclick="return confirm('Tem a certeza que quer apagar a review?');" />
+                            </form>
+                        }
+                    </div>
+                }
+            }
+
+        }
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var form = document.querySelector("#create-review-form form");
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                var gameId = @Model.Id;
+                var rating = document.querySelector("#create-review-form #rating").value;
+                var content = document.querySelector("#create-review-form #content").value;
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "@Url.Action("CreateReview", "InfoProduct")");
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        location.reload();
+                    }
+                };
+                xhr.send("gameId=" + gameId + "&rating=" + rating + "&content=" + content);
+            });
+        });
+    </script>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("buttonCart");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
+
+    <script>
+        setTimeout(function () {
+            var alert = document.querySelector('.alert');
+            alert.remove();
+        }, 10000);
+    </script>
+</body>

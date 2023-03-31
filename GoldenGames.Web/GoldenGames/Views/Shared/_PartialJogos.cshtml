@@ -1,0 +1,35 @@
+﻿@using GoldenGames.Areas.Admin.ViewModels
+@using GoldenGames.Models
+
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+@model IList<Jogo>
+@{
+    //  Casting
+    var jogos = (List<Jogo>)ViewData["Jogos"];
+}
+
+
+<!--Stand Alone games-->
+<div class="vrdstand">
+        <!--Se o utilizador carregar vai ser redirecionado para o InfoProduct Details-->
+        @foreach(var game in Model.ToList())
+        {
+            <div>
+                <a asp-area="" asp-controller="InfoProduct" asp-action="Index" asp-route-id="@game.Id">
+                    <img class="game-images border border-warning rounded-4" src="data:image/*;base64,@(Convert.ToBase64String(game.Imagem))" style="position:relative; right:20px; height:250px; width:250px" />
+                </a>
+
+                <label class="game-label" style="font-size:20px">@game.Nome</label>
+                <label class="category-label" style="font-size:20px">@game.IdCategoriaNavigation.Nome</label>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                <a asp-controller="Cart" asp-action="AddToCart" asp-route-gameid= "@game.Id" style="position:relative; left:90px; top:-20px" class="btn btn-outline-warning">Buy</a>
+                }
+            </div>
+           
+        }
+</div>

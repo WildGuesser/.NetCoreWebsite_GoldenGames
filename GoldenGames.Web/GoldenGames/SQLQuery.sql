@@ -1,0 +1,56 @@
+﻿CREATE TABLE Utilizadores(
+	Id INTEGER NOT NULL,
+	Email NVARCHAR(50) NOT NULL,
+	Telemovel NVARCHAR(14),
+	Nome NVARCHAR(40) NOT NULL,
+	isADMIN BIT NOT NULL,
+	isFUNC BIT NOT NULL,
+	isCLIENT BIT NOT NULL,
+	PRIMARY KEY (Id),
+);
+
+
+CREATE TABLE Categoria(
+	Id INTEGER NOT NULL,
+	Nome NVARCHAR(20) NOT NULL,
+	PRIMARY KEY (Id),
+);
+
+CREATE TABLE Jogos(
+	Id INTEGER NOT NULL,
+	Id_Categoria INT FOREIGN KEY (Id_Categoria) REFERENCES [Categoria]([Id]),
+
+	Nome NVARCHAR(50) NOT NULL,
+	Descricao NVARCHAR(500) NOT NULL,
+	Produtora NVARCHAR(50) NOT NULL,
+	Imagem VARBINARY(MAX) NOT NULL
+	PRIMARY KEY (Id),
+);
+
+CREATE TABLE RegistoJogo(
+	Id INTEGER NOT NULL,
+
+	Id_Utilizador INT FOREIGN KEY (Id_Utilizador) REFERENCES [Utilizadores]([Id]),
+	Id_Jogo INT FOREIGN KEY (Id_Jogo) REFERENCES [Jogos]([Id])
+	PRIMARY KEY (Id),
+);
+
+CREATE TABLE Compra(
+	Id INTEGER NOT NULL,
+	Preco DECIMAL(4,2) NOT NULL
+	PRIMARY KEY (Id),
+);
+
+CREATE TABLE Jogos_Compra(
+	Id INTEGER NOT NULL,
+	Id_Jogo INT FOREIGN KEY (Id_Jogo) REFERENCES [Jogos]([Id]),
+	Id_Compra INT FOREIGN KEY (Id_Compra) REFERENCES [Compra]([Id])
+	PRIMARY KEY (Id),
+);
+
+CREATE TABLE Utilizadores_Jogos(
+	Id INTEGER NOT NULL,
+	Id_Utilizador INT FOREIGN KEY (Id_Utilizador) REFERENCES [Utilizadores]([Id]),
+	Id_Jogos INT FOREIGN KEY (Id_Jogos) REFERENCES [Jogos]([Id])
+	PRIMARY KEY (Id),
+);

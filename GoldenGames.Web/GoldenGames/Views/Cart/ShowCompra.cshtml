@@ -1,0 +1,31 @@
+﻿@model List<GoldenGames.Models.JogosCompra>
+
+
+<div>
+    <h3>Jogos Comprados</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Preco</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+         {
+            <tr>
+                <td>@item.IdJogoNavigation.Nome</td>
+                <td>@item.IdJogoNavigation.Preco</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h3>Total</h3>
+    <p>@ViewBag.total</p>
+</div>
+
+
+
